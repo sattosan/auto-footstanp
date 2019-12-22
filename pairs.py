@@ -5,6 +5,7 @@ import os
 import signal
 import unicodedata
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 from settings import EMAIL, PASS
 
 def facebookLogin(driver):
@@ -27,8 +28,8 @@ def execFootStanp(driver, n):
     # n人に到達するまで繰り返す（足跡間隔はランダムで3〜4秒の間）
     for i in range(1, int(n)+1):
         driver.get(f"https://pairs.lv/#/search/one/{i}")
-        print(f"{i}人目に足跡ぺた〜")
         time.sleep(random.randint(3,5))
+        print(f"{i}人目に足跡ぺた〜")
     print(f"=========={n}人に足跡をつけました==========")
 
 def main(driver):
@@ -56,8 +57,10 @@ if __name__ == '__main__':
         # セッションをクローズ
         driver.close()
     # 例外処理
-    except TimeoutError:
-        print("\ntimeout!")
+    except ElementClickInterceptedException as ecie:
+        print(f"exception!\n{ecie}")
+    except TimeoutException as te:
+        print(f"timeout!\n{te}")
     except KeyboardInterrupt:
         print("\napp shutdown!")
     # 例外発生時プロセスを強制的にキル
