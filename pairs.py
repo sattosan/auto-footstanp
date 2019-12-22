@@ -8,10 +8,8 @@ from selenium import webdriver
 from settings import EMAIL, PASS
 
 def facebookLogin(driver):
-    time.sleep(2)
     # Facebookログインボタンをクリック
     driver.find_element_by_xpath('//*[@id="registerBtn1"]').click()
-    time.sleep(2)
     # Facebookログインページにフォーカス
     driver.switch_to.window(driver.window_handles[-1])
     # メールアドレスとパスワードの入力
@@ -21,7 +19,6 @@ def facebookLogin(driver):
     driver.find_element_by_xpath('//*[@id="email_container"]/div/label').click()
     # ログインボタンをクリック
     driver.find_element_by_xpath('//*[@id="u_0_0"]').click()
-    time.sleep(2)
     # ログイン後，メインページにフォーカスを戻す
     driver.switch_to.window(driver.window_handles[0])
 
@@ -49,16 +46,20 @@ def main(driver):
         n = unicodedata.normalize('NFKC', n)
     # 自動足跡を実行
     execFootStanp(driver, n)
-    # セッションをクローズ
-    driver.close()
 
 if __name__ == '__main__':
     try:
         driver = webdriver.Chrome('./driver/chromedriver')
+        # seleniumの動作タイムアウトを10秒間に設定
+        driver.implicitly_wait(10)
         main(driver)
-    # Ctrl-Cが押されたとき，プロセスを強制的にキル
+        # セッションをクローズ
+        driver.close()
+    # 例外処理
+    except TimeoutError:
+        print("\ntimeout!")
     except KeyboardInterrupt:
-        os.kill(driver.service.process.pid,signal.SIGTERM)
-    # その他，例外発生時プロセスを強制的にキル
+        print("\napp shutdown!")
+    # 例外発生時プロセスを強制的にキル
     finally:
         os.kill(driver.service.process.pid,signal.SIGTERM)
