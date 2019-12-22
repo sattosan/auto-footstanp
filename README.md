@@ -26,6 +26,7 @@ https://chromedriver.chromium.org/downloads
 - ログインに必要な情報を設定
 
 `.env`をカレントディレクトリに作成
+
 そして，以下のようにメールアドレスとパスワードを設定する
 
 ```txt:./.env
