@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  selenium-hub:
+    image: selenium/hub
+    container_name: "selenium-hub"
+    ports:
+      - 4444:4444
+
+  chrome:
+    image: selenium/node-chrome-debug
+    container_name: "chrome"
+    ports:
+      - 5900:5900
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - no_proxy=localhost
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+      - HUB_ENV_no_proxy=localhost
+
+  pairs:
+    build: "./docker"
+    container_name: "pairs"
+    links:
+      - selenium-hub
+    command: "tail -f /dev/null"
+    volumes:
+      - ./src:/usr/src
+    environment:
+      - "TZ=Asia/Tokyo"
