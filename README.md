@@ -4,6 +4,21 @@
 
 ない方は，調べてインストールしてください．
 
+## デバック
+
+VNC を使うことで，docker 上の Headless Chrome ブラウザにアクセスし，selenium の動作を確認することができます．
+
+### mac を使っている場合
+
+- Finder > 移動 > サーバへ移動 > `vnc://localhost:5900` > 接続
+- パスワード：`secret`
+- VNC が別ウィンドウで開きます
+
+### windows をつかっている場合
+
+[VNC Viewer](https://www.realvnc.com/)
+などをインストールして，`vnc://localhost:5900`にアクセスしましょう
+
 ### リポジトリのクローン
 
 ```bash
