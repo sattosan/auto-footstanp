@@ -25,7 +25,7 @@ VNC を使うことで，docker 上の Headless Chrome ブラウザにアクセ�
 $ git clone https://github.com/sattosan/auto-footstanp.git
 
 # クローンしたディレクトリに入る
-$ cd auto-footstan
+$ cd auto-footstanp
 ```
 
 ### コンテナの起動
