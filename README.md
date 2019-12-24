@@ -1,35 +1,31 @@
 ## インストール
 
+**git**，**docker**，**docker-compose**入っていることが前提です．
+
+ない方は，調べてインストールしてください．
+
 ### リポジトリのクローン
 
 ```bash
 $ git clone https://github.com/sattosan/auto-footstanp.git
+
+# クローンしたディレクトリに入る
+$ cd auto-footstan
 ```
 
-### 必要パッケージのインストール
+### コンテナの起動
 
 ```bash
-$ pip install selenium python-dotenv
+$ docker-compose up -d --build
 ```
-
-その他に足りないものがあれば，随時入れる
-
-### chrome ドライバーのダウンロード
-
-以下のリンクから，自身の chrome のバージョンにあった**chromedriver**をダウンロードする
-https://chromedriver.chromium.org/downloads
-
-### ドライバーの保存先
-
-ダウンロードしたドライバーを`./driver`に保存
 
 ### ログインに必要な情報を設定
 
-`.env`をカレントディレクトリに作成
+`.env`を`./src`配下に作成
 
 そして，以下のようにメールアドレスとパスワードを設定する
 
-```txt:./.env
+```txt:./src/.env
 EMAIL = "example@gmail.com"
 PASSWORD = "password"
 ```
@@ -39,11 +35,32 @@ PASSWORD = "password"
 ### プログラムの実行
 
 ```bash
-$ python pairs.py
+$ docker-compose run pairs python main.py
 ```
 
-### 足跡つける人数を聞かれるので数字を入力
+### ログイン後，足跡つける人数を聞かれるので数字を入力
 
 ```bash
 何人に足跡つけますか？ 数字を入力してください > 10
+```
+
+### 途中で中断する場合
+
+- **Ctrl-c**を入力
+
+```bash
+$ dc run --rm pairs python main.py
+Starting selenium-hub ... done
+何人に足跡つけますか？ 数字を入力してください > 1000
+==========1000人に足跡をつけます==========
+1人目に足跡ぺた〜
+2人目に足跡ぺた〜
+^C
+app shutdown!
+```
+
+## 終了
+
+```bash
+$ docker-compose down
 ```
