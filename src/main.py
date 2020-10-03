@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-import time
+import math
 import random
+import time
 import unicodedata
 
 from selenium import webdriver
@@ -55,7 +56,7 @@ def exec_footstanp(driver, n, layout_title):
 
     print(f"=========={n}人に足跡をつけます==========")
     click_element_by_xpath(search_detail_link, driver)
-    exec_scroll(scroll_num=10, driver=driver)
+    exec_scroll(scroll_num=math.ceil((int(n) - 39) / 9), driver=driver)
     click_element_by_xpath(first_icon_xpath, driver)
     # カルーセルのリンクが定期的に変わるのでチェック
     if not check_exists_by_xpath(next_carousel_xpath, driver):
@@ -65,7 +66,7 @@ def exec_footstanp(driver, n, layout_title):
             print('No Such Carousel')
             return
     # n人に到達するまで繰り返す（足跡間隔はランダムで3〜4秒の間）
-    for i in range(0, int(n)):
+    for i in range(1, int(n)):
         if not check_exists_by_xpath(next_carousel_xpath, driver):
             break
         click_element_by_xpath(next_carousel_xpath, driver)
